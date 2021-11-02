@@ -24,7 +24,6 @@ let objects =[
 let nbObjects = objects.length;
 let maxCapacity = 10+1;
 let P = Array(nbObjects).fill().map(()=>Array(maxCapacity).fill(0));
-// console.log(P)
 for (let i = 1 ; i<= nbObjects-1 ; i++){
     for(let j = 1 ; j<= maxCapacity-1 ; j++){
         console.log(' I =', i, 'J = ', j);
