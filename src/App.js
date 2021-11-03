@@ -88,24 +88,7 @@ function App() {
             localization={tableLang}
             columns={columns}
             data={[]}
-            // detailPanel={[
-            //   {
-            //     icon : () => <CardTravel fontSize="small" className={classes.icon_button_green} />,
-            //     tooltip : 'Details Du Voayage' ,
-            //     render : rowData => rowData.id_trip ? detailPanelTrip(rowData.id_trip) : errorMessage("trip not found")
-            //   }
-            //
-            // ]}
-            // actions={[
-            //   {
-            //     tooltip: 'Rafrechir les données',
-            //     icon: () =>  <Cached fontSize="small" className={classes.icon_button_blue} />,
-            //     isFreeAction: true,
-            //     onClick: () => setrefresh(refresh + 1)
-            //
-            //   },
-            //
-            // ]}
+
         />
       </Paper>
     </div>
