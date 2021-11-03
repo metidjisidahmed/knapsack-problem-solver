@@ -8,10 +8,10 @@ export default function KnapsackTable({ P, maxCapacity, nbObjects }) {
                 {
                     P.map((row, rindex) =>
                         rindex !== 0 ?
-                            <tr>
+                            <tr key={rindex}>
                                 {row.map((data, cindex) =>
                                     cindex !== 0 ?
-                                        <td >{data}</td>
+                                        <td key={rindex*100+cindex} >{data}</td>
                                         : null
                                 )}
                             </tr> : null

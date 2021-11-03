@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.MuiTableCell-root.MuiTableCell-head.MTableHeader-header-23.MuiTableCell-alignLeft {
+  text-align: center !important;
+}

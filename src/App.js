@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Paper } from "@material-ui/core";
-import MaterialTable from "material-table";
+import MaterialTable , {MTableHeader} from "material-table";
 import { tableIcons, tableLang } from './materialTableOptions/index';
 import { makeStyles } from '@material-ui/core/styles';
+import KnapsackTable from "./components/KnapsackTable";
+import {solver , objects , maxCapacity} from './noyau/noyau';
+import { useState} from 'react'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,49 +51,99 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles();
+    const [objects, setObjects] = useState([
+        {
+            weight : 2,
+            value : 5
+        },
+        {
+            weight : 1,
+            value :3
+        },
+        {
+            weight :4 ,
+            value :7
+        },
+        {
+            weight :3 ,
+            value :1
+        },
+        {
+            weight :5 ,
+            value :6
+        },
+    ]);
     /* default table options */
     const tableOptions = {
-        filtering: false,
-        search: true,
-        exportButton: true,
-        grouping: true,
-        selection: false,
-        exportFileName: "Historique_des_réservations"
+        sorting : true,
+        pageSize : 5
     };
 
     /* default table structure */
     const columns = [
-        // {field: '_id', title: 'GUID' , export : false},
-        { field: 'riderFullName', title: "Nom du client" },
-        { field: 'riderPhoneNumber', title: "Telephone du client" },
-        { field: 'departureBookingAdress', title: 'Adresse de depart' },
-        { field: 'departureDateTrip', title: "Date de depart", defaultGroupOrder: 0, defaultGroupSort: 'desc' },
-        { field: 'arrivalBookingAdress', title: "Adresse d'arrivé" },
-        // {field : 'arrivalDateTrip' , title: "Date d'arrivé"} ,
-        { field: 'bookedSeats', title: 'Nmb de Places reservé' },
-        // {field : 'availableSeats' , title: "Place disponible" , export : false} ,
-        { field: 'bookingPrice', title: 'Prix de la réservation' },
-        { field: 'state', title: 'Etat', export: false },
-        // {field : 'homePickUp' , title: 'PickUp' , type : "boolean" , export : false } ,
-        // {field : 'homeDrop' , title: 'HomeDrop' , type : "boolean" , export : false } ,
-        // {field : 'idTrip' , title: "ID du voayage" } ,
-        // {field : 'timestamps' , title: 'Date de creation' } ,
+        { field: 'weight', title: "Poids" , render: rowData => (
+        <div className="text-center" style={{fontSize : '0.8rem'}}>{rowData.weight}</div>
+    )  },
+        { field: 'value', title: "Profit" , render: rowData => (
+                <div className="text-center" style={{fontSize : '0.8rem'}}>{rowData.value}</div>
+            ) },
     ];
 
     return (
-    <div className="App">
+    <div className="App pe-5 ps-5 mt-4 mb-4">
       <Paper variant="elevation" elevation={8} className={classes.card_paper}  >
         <MaterialTable
-            title="Reservations"
+            components={{
+                Header: props => (
+                       <MTableHeader {...props}  style={{textAlign : 'center'}}/>
+                )
+            }}
+            title="Introduire les objets disponibles ici : "
             // onRowClick={(event, rowData, toggleDetailPanel)=>{dispatch(copyAndsetSnackBarContent(rowData.riderPhoneNumber))}}
             icons={tableIcons}
             options={tableOptions}
             localization={tableLang}
             columns={columns}
-            data={[]}
+            data={objects}
+            editable={
+                {
+                    onRowAdd : newData=>new Promise((resolve , reject)=>{
+                        if(newData.weight && newData.value){
+                            setObjects(oldState => oldState.concat(newData));
+                            resolve();
+                        }else{
+                            reject();
+                        }
+                    }),
+                    onRowUpdate: (newData, oldData) => {
+                        return new Promise((resolve , reject)=>{
+                            let actualData = objects.filter((obj, index) => {
+                                return (obj.weight === oldData.weight && obj.value === oldData.value)
 
+                            })[0];
+                            let actualIndex = objects.indexOf(actualData);
+                            console.log('Actual index =', actualIndex , 'Actual Data =', actualData);
+                            let newObjects = [...objects];
+                            newObjects[oldData.tableData.id] = newData;
+                            setObjects(newObjects);
+                            resolve();
+                        })
+                    },
+                    onRowDelete : oldData => {
+                        return new Promise((resolve , reject)=>{
+                            let newObjects = [...objects];
+                            newObjects.splice(1, 1);
+                            setObjects(newObjects);
+                            resolve();
+                        })
+                    }
+                }
+
+            }
         />
       </Paper>
+        <hr/>
+        <KnapsackTable maxCapacity={maxCapacity} P={solver(objects , 10+1)} nbObjects={objects.length}/>
     </div>
   );
 }
