@@ -11,7 +11,7 @@ export default function KnapsackTable({ P, maxCapacity, nbObjects }) {
                             <tr key={rindex}>
                                 {row.map((data, cindex) =>
                                     cindex !== 0 ?
-                                        <td key={rindex*100+cindex} >{data}</td>
+                                        <td key={rindex * 100 + cindex} >{data}</td>
                                         : null
                                 )}
                             </tr> : null
@@ -21,7 +21,7 @@ export default function KnapsackTable({ P, maxCapacity, nbObjects }) {
         </Table>
 
         <div>
-            The maximum profit is {P[nbObjects - 1][maxCapacity - 1]}
+            The maximum profit is {P[nbObjects][maxCapacity]}
         </div>
     </>
 }
