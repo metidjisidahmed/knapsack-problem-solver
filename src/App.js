@@ -3,11 +3,11 @@ import MaterialTable, { MTableHeader } from "material-table";
 import { tableIcons, tableLang } from './materialTableOptions/index';
 import { makeStyles } from '@material-ui/core/styles';
 import KnapsackTable from "./components/KnapsackTable";
-import { solver, objects, maxCapacity } from './noyau/noyau';
+import { solver } from './noyau/noyau';
 import { useState } from 'react';
-import { Button, TextField, Paper, Box, AppBar, Toolbar, IconButton, Typography } from "@mui/material";
-import { Delete } from "@material-ui/icons";
-import { Calculate, Replay, Menu } from "@mui/icons-material";
+import { Button, TextField, Paper, Box, AppBar, Toolbar, Typography } from "@mui/material";
+import { Calculate, Replay } from "@mui/icons-material";
+import AboutDialog from './components/AbourDialog';
 import React from "react";
 
 
@@ -77,6 +77,7 @@ function App() {
         },
     ]);
     const [resultatMode, setResultatMode] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     /* default table options */
     const tableOptions = {
         sorting: true,
@@ -96,6 +97,10 @@ function App() {
             )
         },
     ];
+
+
+
+
     const Header = () => {
         return (
             <Box sx={{ flexGrow: 1 }}>
@@ -104,6 +109,10 @@ function App() {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             KnapSack Problem solver
                         </Typography>
+                        <Button variant="outlined" sx={{ ml: "auto" }} onClick={() => setOpenDialog(true)} style={{ color: '#fff', borderColor: '#fff' }}>
+                            About
+                        </Button>
+                        <AboutDialog open={openDialog} onClose={() => { setOpenDialog(false) }} />
                     </Toolbar>
                 </AppBar>
             </Box>
