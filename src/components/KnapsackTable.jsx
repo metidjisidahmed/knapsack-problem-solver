@@ -2,7 +2,7 @@ import { Table } from 'react-bootstrap';
 
 export default function KnapsackTable({ P, maxCapacity, nbObjects }) {
 
-    return <>
+    return <div className="ks">
         <Table striped bordered width={20}>
             <tbody>
                 {
@@ -20,8 +20,6 @@ export default function KnapsackTable({ P, maxCapacity, nbObjects }) {
             </tbody>
         </Table>
 
-        <div>
-            The maximum profit is {P[nbObjects][maxCapacity]}
-        </div>
-    </>
+        <h2>The maximum profit is {P[nbObjects][maxCapacity]}</h2>
+    </div>
 }
