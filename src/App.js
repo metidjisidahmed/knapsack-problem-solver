@@ -125,7 +125,7 @@ function App() {
             <Header />
             <div className="App pe-5 ps-5 mt-4 mb-4">
                 <div className="col-10 offset-1 pt-2 pb-2">
-                    <TextField disabled={resultatMode} value={W} onChange={(e) => setW(e.target.value)} error={W <= 0} helperText={'Le poids maximum doit avoit une valeur strictement positive !'} type={'number'} className={'w-100'} label="Spécifiez le poids maximum de votre sac à dos ( W ) :" variant="outlined" />
+                    <TextField disabled={resultatMode} value={W} onChange={(e) => setW(e.target.value)} error={W <= 0} helperText={'Le poids maximum doit avoit une valeur strictement positive !'} type={'number'} className={'w-100'} label="Spécifiez le poids maximum de votre sac à dos ( W ) :" variant="standard" />
                 </div>
                 <Paper variant="elevation" elevation={8} className={classes.card_paper}  >
                     <MaterialTable
@@ -168,7 +168,7 @@ function App() {
                                 onRowDelete: oldData => {
                                     return new Promise((resolve, reject) => {
                                         let newObjects = [...objects];
-                                        newObjects.splice(1, 1);
+                                        newObjects.splice(oldData.tableData.id, 1);
                                         setObjects(newObjects);
                                         resolve();
                                     })
@@ -182,7 +182,7 @@ function App() {
                 {
                     !resultatMode ? (
                         <div className="col-12 justify-content-center d-flex mb-3">
-                            <Button disabled={W <= 0 || !objects.length} onClick={() => setResultatMode(true)} style={!(W <= 0 || !objects.length) ? { color: '#325aa8', borderColor: '#325aa8' } : {}} variant="outlined" startIcon={<Calculate />}>
+                            <Button disabled={W <= 0 || !objects.length} onClick={() =>{setResultatMode(true); setTimeout(()=>window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })   , 100);  }} style={!(W <= 0 || !objects.length) ? { color: '#325aa8', borderColor: '#325aa8' } : {}} variant="outlined" startIcon={<Calculate />}>
                                 Calculer le résultat
                             </Button>
                         </div>
