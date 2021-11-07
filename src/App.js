@@ -81,7 +81,8 @@ function App() {
     /* default table options */
     const tableOptions = {
         sorting: true,
-        pageSize: 5
+        pageSize: 5,
+        search: false
     };
 
     /* default table structure */
@@ -182,7 +183,7 @@ function App() {
                 {
                     !resultatMode ? (
                         <div className="col-12 justify-content-center d-flex mb-3">
-                            <Button disabled={W <= 0 || !objects.length} onClick={() =>{setResultatMode(true); setTimeout(()=>window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })   , 100);  }} style={!(W <= 0 || !objects.length) ? { color: '#325aa8', borderColor: '#325aa8' } : {}} variant="outlined" startIcon={<Calculate />}>
+                            <Button disabled={W <= 0 || !objects.length} onClick={() => { setResultatMode(true); setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100); }} style={!(W <= 0 || !objects.length) ? { color: '#325aa8', borderColor: '#325aa8' } : {}} variant="outlined" startIcon={<Calculate />}>
                                 Calculer le résultat
                             </Button>
                         </div>
